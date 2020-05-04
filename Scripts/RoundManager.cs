@@ -30,7 +30,7 @@ public class RoundManager : MonoBehaviour
 
     }
 
-    public void NextRound()
+    public void PrepareNextRound()
     {
         if (roundNumber < 4)
         {

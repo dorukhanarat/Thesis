@@ -40,12 +40,41 @@ public class MatchManager : MonoBehaviour
         foreach(Player player in players) {
             MatchPlayer(player);
             player.roundManager.StartRound();
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    player.board.tiles[i, j] = player.roundManager.board.tiles[i, j];
+                }
+            }
+            foreach (Unit enemy in player.roundManager.enemies)
+            {
+                foreach (Unit unit in player.units)
+                {
+                    unit.enemies.Add(enemy);
+                }
+            }
         }
         Wait(roundTime);
         RoundEnd();
     }
 
     public void RoundEnd() {
+        int damage;
+        foreach(Player player in players) {
+            damage = 0;
+            foreach(Unit unit in player.roundManager.enemies){
+                if(unit.isAlive == false) {
+                    if(unit.GetType().ToString() == "Minion") {
+                    damage += player.roundManager.minionDamage;
+                }
+                    else {
+                        damage += player.roundManager.heroDamage;
+                    }
+                } 
+            }
+            player.health -= damage;
+        }
         foreach(Player player in players) {
             player.roundManager.enemies.Clear();
             if(roundNumber % 10 == 0) {
@@ -53,7 +82,7 @@ public class MatchManager : MonoBehaviour
             }
             player.isMatched = false;
             player.skillPoints++; 
-            player.roundManager.NextRound();
+            player.roundManager.PrepareNextRound();
         }
         Wait(restTime);
         roundNumber++;

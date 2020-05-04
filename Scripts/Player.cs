@@ -74,23 +74,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (roundManager.roundEnded)
-        {
-            for (int i = 0; i < 8; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    board.tiles[i, j] = roundManager.board.tiles[i, j];
-                }
-            }
-            foreach (Unit enemy in roundManager.enemies)
-            {
-                foreach (Unit unit in units)
-                {
-                    unit.enemies.Add(enemy);
-                }
-            }
-        }
+        
 
         if (passiveTree.newNodeSelected)
         {
