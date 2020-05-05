@@ -68,17 +68,42 @@ public class Barbarian : Hero
     }
 
 
-    void GroundSlam()
+    public void GroundSlam()
     {
-
+        foreach(Unit unit in enemies) {
+            if((Distance(unit) <= range)) {
+                unit.TakeDamage(50,"Physical");
+            }
+        }
     }
 
-    void Earthquake()
+    public void Earthquake()
     {
-
+        foreach(Unit unit in enemies) {
+            if((Distance(unit) <= range)) {
+                unit.TakeDamage(100,"Physical");
+            }
+        }
+        foreach(Unit unit in enemies) {
+            if((Distance(unit) <= range)) {
+                for(int i = 0; i < 5; i++) {
+                    unit.TakeDamage(10,"Physical");
+                    Wait(1.0f);
+                } 
+            }    
+        }
     }
-    void LeapSlam()
-    {
 
+    // Needs a jump annimation
+    public void LeapSlam()
+    { 
+        if(target != null) {
+            transform.position = target.transform.position;
+            foreach(Unit unit in enemies) {
+            if((Distance(unit) <= range)) {
+                unit.TakeDamage(100,"Physical");
+                }
+            }
+        }   
     }
 }

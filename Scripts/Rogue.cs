@@ -65,18 +65,33 @@ public class Rogue : Hero
         }
     }
 
+    // Needs a direction
     void FanOfKnives()
     {
+        foreach(Unit unit in enemies) {
+            if(Distance(unit) < 2.0) {
+                unit.TakeDamage(30, "Physical");
+            }
+        }
 
     }
 
     void Swap()
     {
-
+        foreach(Unit unit in enemies){
+            if(unit.GetType().ToString() == "Hero") {
+                var location = transform.position;
+                transform.position = unit.transform.position;
+                unit.transform.position = location; 
+            }
+        }
     }
 
+    // Needs a direction, maybe with a projectile
     void PierceAndDestroy()
     {
-
-    }
+        foreach(Unit unit in enemies) {
+            unit.TakeDamage(80, "Physical");
+        }
+    }    
 }

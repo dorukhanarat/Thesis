@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Wizard : Hero
 {
+
     public Wizard()
     {
         damage = 80f;
@@ -66,18 +67,28 @@ public class Wizard : Hero
         }
     }
 
+    // Fireball throwing animation
     void Fireball()
     {
+        if(target != null) {
+            // Throw...
+            target.TakeDamage(70, "Magical");
+        }
 
     }
 
     void SummonUnderling()
     {
-
+        for(int i = 0; i < 3; i++) {
+            spawns.Add(new Underling());
+        }
     }
 
     void ArcLightning()
     {
+        for(int i = 0; i < 7; i++) {
+            enemies[(int) Random.Range(0, enemies.Count)].TakeDamage(50,"Magical");
+        }
 
     }
 

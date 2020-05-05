@@ -8,6 +8,7 @@ public abstract class Hero : Unit
     public string ascendancyName;
     public bool isAscended = false;
     public List<Item> items = new List<Item>();
+    public List<Minion> spawns = new List<Minion>();
     public bool newItemTaken = false;
     public Hero()
     {
@@ -24,6 +25,16 @@ public abstract class Hero : Unit
     void Update()
     {
 
+    }
+
+    public IEnumerator Skill() {
+        UseSkill(ascendancyName);
+        yield return new WaitForSeconds(cooldown);
+        StartCoroutine(Skill());
+    }
+
+    public IEnumerator Wait(float length) {
+        yield return new WaitForSeconds(length);
     }
 
     public abstract void Ascend(string ascendancyName);

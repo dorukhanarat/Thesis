@@ -16,6 +16,7 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] public float critChance;
     [SerializeField] public float critDamage;
     public bool unitSelected = false;
+    public bool isVulnerable = true;
     public bool isAlive = true;
     public List<Unit> enemies = new List<Unit>();
     public Unit target;
@@ -30,21 +31,34 @@ public abstract class Unit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Target();
-        Move();
-        Attack();
-        Die();
-        UnitClicked();
+        if(isAlive) {
+            Target();
+            Move();
+            Die();
+        }
+
+        if(target != null) {
+            Attack();
+        }
+
+        if(target == null) {
+            Idle();
+        }
+        
+        if(unitSelected) {
+            UnitClicked();
+        }
+        
         EnemyDead();
     }
 
-    IEnumerator Attack()
+    public IEnumerator Attack()
     {
         if ((Distance(target) <= range) && target.isAlive)
         {
             // Wait for some seconds..
             yield return new WaitForSeconds(attackSpeed / 1);
-            target.life -= damage;
+            target.TakeDamage(damage,"Physical");
         }
         yield return null;
         StartCoroutine(Attack());
@@ -59,13 +73,14 @@ public abstract class Unit : MonoBehaviour
     }
 
     // Modify distance method
-
     public float Distance(Unit unit)
     {
         // Needs modification to 2d distance or not
         var dist = Vector3.Distance(transform.position, unit.transform.position);
         return dist;
     }
+
+
     // unit position to target position
     // Needs Delta time for attribute for flow
     public void Move()
@@ -97,9 +112,13 @@ public abstract class Unit : MonoBehaviour
                     }
                 }
             }
+            else {
+                Idle();
+            }
         }
     }
-    // Detect clicks on unit
+
+    // Detect clicks on unit need a trigger collider or something like that
     public void UnitClicked()
     {
         unitSelected = true;
@@ -107,16 +126,36 @@ public abstract class Unit : MonoBehaviour
 
     public void EnemyDead()
     {
-        if (enemies.Count > 0)
-        {
-            foreach (Unit unit in enemies)
-            {
-                if (unit.isAlive == false)
-                {
-                    target = null;
-                    enemies.Remove(unit);
-                }
+        if(!target.isAlive) {
+            target = null;
+            enemies.Remove(target);
+        }                    
+    }
+
+    public void Idle() {
+
+    }
+
+    public void TakeDamage(float damage, string damageType) {
+        if(isAlive && isVulnerable) {
+            if(damageType == "Physical") {
+                life -= ((damage) - (damage) * DamageReductionFunction(damageType));
+        }
+            else {
+                life -= ((damage) - (damage) * DamageReductionFunction(damageType));
             }
+        }  
+    }
+
+    //Needs a reduction calculation
+    public float DamageReductionFunction(string damageType) {
+        // some function with armor and magic resist
+
+        if(damageType == "Physical") {
+            return 0;
+        }
+        else {
+            return 0;
         }
     }
 

@@ -51,9 +51,13 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(hero.isAscended) {
+            ascendancyTree.AssignTree();
+        }
+
         if (ascendancyTree.ascendancySelected)
         {
-            ascendancyTree.AssignTree();
+            ascendancyPoints--;
             ascendancyTree.ascendancySelected = false;
 
             if (hero.isAscended)

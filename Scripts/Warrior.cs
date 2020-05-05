@@ -63,11 +63,25 @@ public class Warrior : Hero
             HolyArena();
         }
     } 
+
+    // Needs a direction 
     void GroundSlam() {
-
+        foreach(Unit unit in enemies) {
+            if(Distance(unit) < 2.0) {
+                unit.TakeDamage(70, "Physical");
+            }
+        }
     }
-    void CatOnTheParterre() {
 
+    void CatOnTheParterre() {
+        isVulnerable = false;
+        for(int i = 0; i < 4; i++) {
+           target = enemies[(int) Random.Range(0,enemies.Count)];
+           transform.position = enemies[(int) Random.Range(0,enemies.Count)].transform.position;
+           target.TakeDamage(50, "Physical");
+           
+        }
+        
     }
     void HolyArena() {
 

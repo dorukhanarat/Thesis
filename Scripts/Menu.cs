@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-
+    public string selectedEntry;
 
 
     // Start is called before the first frame update
@@ -21,6 +21,10 @@ public class Menu : MonoBehaviour
 
     public void SearchMatch() {
         
+    }
+
+    public void Store() {
+
     }
 
     public void Options() {
