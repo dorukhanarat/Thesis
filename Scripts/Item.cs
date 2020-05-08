@@ -61,7 +61,7 @@ public class Item : MonoBehaviour
             {
                 modifierCount = 5;
             }
-            while (modifierCount < 0)
+            while (modifierCount > 0)
             {
                 value = Random.Range(0, modifierPool.Count);
                 if (itemModifiers.Contains(itemModifiers[value]))

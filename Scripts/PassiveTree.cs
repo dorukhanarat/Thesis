@@ -14,37 +14,19 @@ public class PassiveTree : MonoBehaviour
         
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     public void SelectNode(Node node)
     {
-        if (node.isStart)
-        {
+        if (node.isStart) {
             selectedNodes.Add(node);
             newNodeSelected = true;
         }
-        else
-        {
-            foreach (Node selects in node.neighbors)
-            {
-                if (selects.isSelected)
-                {
+        else {
+            foreach (Node selects in node.neighbors) {
+                if (selects.isSelected) {
                     isEligable = true;
                 }
             }
-            if (isEligable)
-            {
+            if (isEligable) {
                 selectedNodes.Add(node);
                 newNodeSelected = true;
             }
